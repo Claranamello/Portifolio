@@ -1,0 +1,1266 @@
+/* =========================================================
+   Portfólio · Clara de Mello
+   Medidas extraídas do Figma (frames de 1440 × 1024).
+   Cada página é um "palco" proporcional: 1 unidade de
+   design (--u) = 1/1440 da largura. Abaixo de 900px a
+   composição vira coluna (ver bloco MOBILE no final).
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --coral: #fa6e6e;
+    --laranja: #ff9326;
+    --teal: #008487;
+    --amarelo-fundo: rgba(232, 185, 49, 0.63);
+    --cinza-papel: #e8e9e6;
+    --estrela: #b8a90c;
+
+    /* Controle das animações (também lidas por animacoes.js) */
+    --anim-dur: 800ms;
+    --anim-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --anim-dist: 36px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    color: #000;
+    background: #fff;
+}
+
+/* O <main> é o container: --u das seções resolve contra a largura dele (sem a barra de rolagem). */
+main {
+    container-type: inline-size;
+}
+
+a:focus-visible {
+    outline: 3px solid #000;
+    outline-offset: 3px;
+}
+
+/* ---------- Palco ---------- */
+.pagina {
+    --u: calc(100cqw / 1440);
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1440 / 1024;
+    overflow: hidden;
+    isolation: isolate;
+    background: #fff;
+}
+
+/* .p = posicionado pelas variáveis --x --y --w --h (px do Figma) e --fs (tamanho de fonte) */
+.p {
+    position: absolute;
+    left: calc(var(--x) * var(--u));
+    top: calc(var(--y) * var(--u));
+    width: calc(var(--w) * var(--u));
+    height: calc(var(--h) * var(--u));
+    font-size: calc(var(--fs) * var(--u));
+}
+
+/* =========================================================
+   PÁGINA 1 · CAPA — releitura "revista adolescente"
+   Mesma linguagem da página 2: papel creme, meia-tinta, contornos pretos,
+   sombras duras coloridas, fitas, estrelas e filete duplo de jornal.
+   ========================================================= */
+.pagina--capa .meia-tinta {
+    --mt-a: rgba(250, 110, 110, 0.6);
+    --mt-a-pos: 100% 100%;
+    --mt-b: rgba(255, 147, 38, 0.6);
+    --mt-b-pos: 0% 0%;
+    --mt-b-raio: 28%;
+}
+
+/* ---- Faixa de edição + filete (cabeçalho de capa) ---- */
+.cabecalho {
+    --x: 40; --y: 30; --w: 1000;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-weight: 700;
+    font-size: max(10px, calc(17 * var(--u)));
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.cabecalho__no {
+    font-family: 'Caveat', cursive;
+    font-size: 1.9em;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    color: #fff7e6;
+    background: #000;
+    padding: 0 0.6em;
+    border-radius: 99px;
+    rotate: -3deg;
+}
+
+.pagina--capa .filete { --x: 40; --y: 84; --w: 1000; --h: 8; }
+
+/* ---- Índice "Nesta edição" (barra lateral) ---- */
+.barra-lateral {
+    --x: 1074; --y: 0; --w: 366; --h: 1024;
+    background:
+        radial-gradient(circle, rgba(255, 147, 38, 0.55) 0 calc(2.2 * var(--u)), transparent calc(2.7 * var(--u))) 0 0 / calc(14 * var(--u)) calc(14 * var(--u)),
+        rgba(255, 214, 10, 0.5);
+    border-left: calc(4 * var(--u)) solid #000;
+}
+
+/* segundo fio do filete vertical */
+.barra-lateral::before {
+    content: '';
+    position: absolute;
+    left: calc(6 * var(--u));
+    top: 0;
+    bottom: 0;
+    width: max(1px, calc(1.5 * var(--u)));
+    background: #000;
+}
+
+.nesta-edicao {
+    --x: 44; --y: 22; --w: 300; --fs: 56;
+    height: auto;
+    text-align: left;
+    white-space: nowrap;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    line-height: 1;
+    rotate: -4deg;
+}
+
+.destaque--branco {
+    background-image: linear-gradient(transparent 50%, #fff 50% 92%, transparent 92%);
+}
+
+/* Pastas coloridas (retângulos inclinados). Rotação via `rotate`,
+   para a animação poder usar translate/scale sem conflito. */
+.papel { overflow: visible; filter: drop-shadow(5px 8px 0 rgba(0, 0, 0, 0.18)); }
+.papel--azul    { --x: 77.8; --y: 118;   --w: 267.8; --h: 160;   --cor: var(--teal);    rotate: 15.05deg; }
+.papel--laranja { --x: 79.5; --y: 418;   --w: 250.5; --h: 149.5; --cor: var(--laranja); rotate: -13.8deg; }
+.papel--coral   { --x: 52.8; --y: 716;   --w: 273.4; --h: 163.5; --cor: var(--coral);   rotate: 6.36deg; }
+
+/* Legenda de cada pasta: número de página + título da seção (link) */
+.legenda {
+    --x: 44; --w: 290;
+    height: auto;
+    display: block;
+    color: #000;
+    text-decoration: none;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: max(14px, calc(27 * var(--u)));
+    line-height: 1.15;
+}
+
+.legenda--1 { --y: 322; }
+.legenda--2 { --y: 596; }
+.legenda--3 { --y: 906; }
+
+.legenda__pg {
+    display: block;
+    width: max-content;
+    margin-bottom: 0.25em;
+    padding: 0 0.6em;
+    border-radius: 99px;
+    background: #000;
+    color: #fff7e6;
+    font-family: 'Caveat', cursive;
+    font-style: normal;
+    font-size: 1.05em;
+    line-height: 1.2;
+    rotate: -3deg;
+}
+
+.legenda__txt {
+    background: linear-gradient(transparent 55%, #fff 55% 92%, transparent 92%) no-repeat 0 0 / 0 100%;
+    transition: background-size 350ms var(--anim-ease);
+}
+
+.legenda:hover .legenda__txt,
+.legenda:focus-visible .legenda__txt {
+    background-size: 100% 100%;
+}
+
+/* Aba lateral (do Figma), agora como "orelha" de página */
+.aba {
+    --x: -127; --y: 780; --w: 174; --h: 184;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: calc(9 * var(--u));
+    background: var(--teal);
+    border: 3px solid #000;
+    border-radius: calc(35 * var(--u));
+    box-shadow: calc(6 * var(--u)) calc(6 * var(--u)) 0 #ffd60a;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: calc(34 * var(--u));
+    color: #fff7e6;
+}
+
+/* ---- Manchete ---- */
+.titulo {
+    --x: 98; --y: 150; --w: 1004; --h: 486;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.titulo h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: calc(88 * var(--u));
+    line-height: 1.25;
+}
+
+.titulo .linha { white-space: nowrap; }
+
+.titulo .extra {
+    display: inline-block;
+    color: var(--coral);
+    text-shadow: calc(4 * var(--u)) calc(4 * var(--u)) 0 #000;
+    rotate: -3deg;
+}
+
+/* ---- Foto da capa: disco recortado com anel tracejado, fitas e selo ---- */
+.foto {
+    --x: 0; --y: 0; --w: 1440; --h: 1024;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.foto > * { pointer-events: auto; }
+.foto > .foto__anel,
+.foto > .fita,
+.foto > .selo { pointer-events: none; }
+
+.foto__anel {
+    --x: 473; --y: 212; --w: 600; --h: 600;
+    border-radius: 50%;
+    border: 3px dashed #000;
+    rotate: 12deg;
+}
+
+#foto-principal {
+    --x: 507; --y: 245; --w: 532; --h: 533;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #000;
+    box-shadow: calc(14 * var(--u)) calc(14 * var(--u)) 0 #ffd60a;
+}
+
+.fita--capa1 { --x: 690; --y: 224; --w: 150; --h: 36; background: rgba(255, 214, 10, 0.88); rotate: -7deg; z-index: 3; }
+.fita--capa2 { --x: 468; --y: 668; --w: 140; --h: 34; background: rgba(250, 110, 110, 0.88); rotate: 52deg; z-index: 3; }
+
+/* Selo "Imperdível!" (estouro de capa de revista) */
+.selo {
+    --x: 868; --y: 312; --w: 190; --h: 190;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    rotate: -12deg;
+}
+
+.selo svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    filter: drop-shadow(calc(5 * var(--u)) calc(6 * var(--u)) 0 #000);
+}
+
+.selo b {
+    position: relative;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: calc(30 * var(--u));
+    line-height: 0.9;
+    white-space: nowrap;
+    text-align: center;
+}
+
+/* ---- Botões (etiquetas adesivas) ---- */
+.btn1,
+.btn2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    border: 3px solid #000;
+    border-radius: calc(50 * var(--u));
+    box-shadow: calc(6 * var(--u)) calc(6 * var(--u)) 0 #000;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: max(15px, calc(25 * var(--u)));
+    letter-spacing: 0;
+    white-space: nowrap;
+    width: max-content;
+    min-width: calc(var(--w) * var(--u));
+    padding: 0 1em;
+    color: #000;
+    text-decoration: none;
+    text-align: center;
+    transition: translate 200ms ease, box-shadow 200ms ease, rotate 200ms ease;
+}
+
+.btn1 { --x: 760; --y: 718; --w: 272; --h: 66; background: var(--laranja); rotate: -2deg; }
+.btn2 { --x: 785; --y: 626; --w: 322; --h: 66; background: var(--coral);   rotate: 2deg; }
+
+.btn1:hover,
+.btn2:hover {
+    translate: calc(-3 * var(--u)) calc(-3 * var(--u));
+    rotate: 0deg;
+    box-shadow: calc(10 * var(--u)) calc(10 * var(--u)) 0 #000;
+}
+
+.btn1:active,
+.btn2:active {
+    translate: calc(3 * var(--u)) calc(3 * var(--u));
+    box-shadow: 0 0 0 #000;
+}
+
+/* ---- Chamada (estilo da citação da página 2) ---- */
+.texto {
+    --x: 98; --y: 752; --w: 430;
+    height: auto;
+    padding-left: calc(22 * var(--u));
+    border-left: calc(7 * var(--u)) solid var(--coral);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: max(15px, calc(29 * var(--u)));
+    line-height: 1.22;
+}
+
+/* =========================================================
+   PÁGINA 2 · QUEM É A CLARA — releitura "revista adolescente / jornal"
+   (frame Desktop-11 do Figma como base; composição, estrelas e
+   molduras recriadas. Sem cinza: papel creme + cores vivas.)
+   ========================================================= */
+.pagina--revista {
+    background: #fff7e6;
+}
+
+/* Retícula de meia-tinta (impressão) nos cantos.
+   Cada página pode trocar cor/canto pelas variáveis --mt-*; os cantos
+   de uma página e da seguinte se encontram, como uma impressão contínua. */
+.meia-tinta {
+    --mt-a: rgba(250, 110, 110, 0.6);
+    --mt-a-pos: 100% 0%;
+    --mt-a-raio: 40%;
+    --mt-b: rgba(0, 132, 135, 0.5);
+    --mt-b-pos: 0% 100%;
+    --mt-b-raio: 34%;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.meia-tinta::before,
+.meia-tinta::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-size: calc(16 * var(--u)) calc(16 * var(--u));
+}
+
+.meia-tinta::before {
+    background-image: radial-gradient(circle, var(--mt-a) 0 calc(2.4 * var(--u)), transparent calc(2.8 * var(--u)));
+    -webkit-mask-image: radial-gradient(circle at var(--mt-a-pos), #000 0, transparent var(--mt-a-raio));
+    mask-image: radial-gradient(circle at var(--mt-a-pos), #000 0, transparent var(--mt-a-raio));
+}
+
+.meia-tinta::after {
+    background-image: radial-gradient(circle, var(--mt-b) 0 calc(2.4 * var(--u)), transparent calc(2.8 * var(--u)));
+    -webkit-mask-image: radial-gradient(circle at var(--mt-b-pos), #000 0, transparent var(--mt-b-raio));
+    mask-image: radial-gradient(circle at var(--mt-b-pos), #000 0, transparent var(--mt-b-raio));
+}
+
+/* ---- Manchete ---- */
+.quem-e {
+    --x: 0; --y: 0; --w: 1440; --h: 340;
+    pointer-events: none;
+    font-weight: 400;
+}
+
+.quem-e__pre {
+    --x: 44; --y: 30; --w: 333; --fs: 70;
+    height: auto;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    line-height: 1.1;
+    white-space: nowrap;
+    rotate: -5deg;
+}
+
+.quem-e__clara {
+    --x: 92; --y: 100; --w: 650; --h: 186;
+    rotate: 2.5deg;
+    filter: drop-shadow(7px 7px 0 var(--coral));
+}
+
+.quem-e__interr {
+    --x: 770; --y: 62; --w: 110; --fs: 170;
+    height: auto;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    line-height: 1.1;
+    rotate: 8deg;
+    text-shadow: 6px 6px 0 #ffd60a;
+}
+
+/* Fitas adesivas */
+.fita {
+    clip-path: polygon(0 0, 4% 12%, 0 25%, 4% 38%, 0 50%, 4% 62%, 0 75%, 4% 88%, 0 100%,
+        100% 100%, 96% 88%, 100% 75%, 96% 62%, 100% 50%, 96% 38%, 100% 25%, 96% 12%, 100% 0);
+}
+
+.fita--amarela { --x: 52;  --y: 112; --w: 150; --h: 36; background: rgba(255, 214, 10, 0.85); rotate: -9deg; }
+.fita--teal    { --x: 700; --y: 255; --w: 140; --h: 34; background: rgba(0, 132, 135, 0.72); rotate: 14deg; }
+.fita--coral   { --x: -34; --y: 140; --w: 130; --h: 34; background: rgba(250, 110, 110, 0.85); rotate: -38deg; z-index: 3; }
+
+/* Filete duplo de jornal sob a manchete */
+.filete {
+    --x: 40; --y: 340; --w: 1360; --h: 8;
+    border-top: 4px solid #000;
+    border-bottom: 1.5px solid #000;
+    transform-origin: left center;
+}
+
+/* ---- Texto em coluna ---- */
+.sobre {
+    --x: 0; --y: 0; --w: 1440; --h: 1024;
+    pointer-events: none;
+}
+
+.sobre p {
+    pointer-events: auto;
+}
+
+.sobre__p1 {
+    --x: 60; --y: 382; --w: 440; height: auto;
+    font-size: max(14px, calc(25 * var(--u)));
+    line-height: 1.52;
+    text-align: left;
+}
+
+/* Capitular */
+.sobre__p1::first-letter {
+    float: left;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: 3.7em;
+    line-height: 0.78;
+    padding: 0.05em 0.1em 0 0;
+    color: var(--coral);
+    text-shadow: 3px 3px 0 #000;
+}
+
+.sobre__p2 {
+    --x: 60; --y: 752; --w: 440; height: auto;
+    padding-left: calc(22 * var(--u));
+    border-left: calc(7 * var(--u)) solid var(--coral);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: max(16px, calc(31 * var(--u)));
+    line-height: 1.22;
+}
+
+/* Marca-texto inline que se "pinta" quando o parágrafo aparece */
+.destaque {
+    background: linear-gradient(transparent 50%, rgba(255, 214, 10, 0.9) 50% 92%, transparent 92%) no-repeat 0 0 / 100% 100%;
+    padding: 0 0.1em;
+    margin: 0 -0.1em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+.destaque--coral {
+    background-image: linear-gradient(transparent 50%, rgba(255, 45, 135, 0.4) 50% 92%, transparent 92%);
+}
+
+/* ---- Figura recortada sobre disco colorido ---- */
+.figura {
+    --x: 0; --y: 0; --w: 1440; --h: 1024;
+    pointer-events: none;
+}
+
+.figura__disco {
+    --x: 492; --y: 470; --w: 390; --h: 390;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 3px solid #000;
+    box-shadow: calc(10 * var(--u)) calc(10 * var(--u)) 0 #ffd60a;
+}
+
+.figura__anel {
+    --x: 458; --y: 438; --w: 458; --h: 458;
+    border-radius: 50%;
+    border: 3px dashed #000;
+    rotate: 12deg;
+}
+
+.figura__img {
+    --x: 520; --y: 232; --w: 460; --h: 800;
+    object-fit: contain;
+    max-width: none;
+}
+
+/* ---- Ranking de habilidades (cartão) ---- */
+.sabe-fazer {
+    --x: 925; --y: 340; --w: 480;
+    height: auto;
+    z-index: 2;
+}
+
+.sabe-fazer__titulo {
+    --x: 0; --y: 0; --w: 480; --fs: 80;
+    height: auto;
+    z-index: 3;
+    text-align: right;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    line-height: calc(60 / 80);
+}
+
+/* Faixa laranja de marca-texto atrás do título */
+.sabe-fazer__titulo::before {
+    content: '';
+    position: absolute;
+    inset: 30% 0 -4% 3%;
+    background: rgba(255, 147, 38, 0.92);
+    border: 3px solid #000;
+    rotate: -2deg;
+    transform-origin: left center;
+    z-index: -1;
+}
+
+.sabe-fazer__titulo span {
+    position: relative;
+}
+
+.habilidades {
+    list-style: none;
+    margin-top: calc(150 * var(--u));
+    padding: calc(8 * var(--u)) 0;
+    background: #fff;
+    border: 3px solid #000;
+    box-shadow: calc(11 * var(--u)) calc(11 * var(--u)) 0 var(--teal);
+    rotate: 1deg;
+}
+
+.hab {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: calc(64 * var(--u));
+    padding: 0 calc(24 * var(--u));
+    border-bottom: 2px dashed #000;
+    font-weight: 600;
+    font-size: max(14px, calc(25 * var(--u)));
+}
+
+.hab:last-child {
+    border-bottom: 0;
+}
+
+.hab--faixa::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(250, 110, 110, 0.38);
+    z-index: -1;
+}
+
+.hab__nome {
+    flex: 0 0 calc(150 * var(--u));
+}
+
+/* Estrelas: contorno branco (vazio) + camada colorida recortada pela nota */
+.estrelas {
+    position: relative;
+    flex: 0 0 auto;
+    display: block;
+    width: calc(250 * var(--u));
+    aspect-ratio: 258 / 58;
+}
+
+.estrelas svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.estrelas .cheia {
+    clip-path: inset(0 calc(100% - var(--nota) / 5 * 100%) 0 0);
+}
+
+/* =========================================================
+   Componentes compartilhados da "revista" (páginas 1–4)
+   ========================================================= */
+
+/* Folio: número de página no canto, como em revista impressa */
+.folio {
+    --x: 1282; --y: 978; --w: 120; --fs: 30;
+    height: auto;
+    z-index: 3;
+    text-align: right;
+    white-space: nowrap;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    line-height: 1;
+    rotate: -3deg;
+    pointer-events: none;
+}
+
+.folio b {
+    display: inline-block;
+    margin-left: 0.2em;
+    padding: 0 0.5em;
+    border-radius: 99px;
+    background: #000;
+    color: #fff7e6;
+    font-weight: 700;
+}
+
+/* =========================================================
+   PÁGINA 3 · PROJETOS — "reportagem" em duas colunas
+   ========================================================= */
+.pagina--projetos .meia-tinta {
+    --mt-a: rgba(0, 132, 135, 0.5);
+    --mt-a-pos: 0% 0%;
+    --mt-a-raio: 30%;
+    --mt-b: rgba(255, 147, 38, 0.6);
+    --mt-b-pos: 100% 100%;
+    --mt-b-raio: 34%;
+}
+
+.pagina--projetos .filete,
+.pagina--contatos .filete { --x: 40; --y: 258; --w: 1360; --h: 8; }
+
+/* Fio vertical entre as colunas (do Figma) */
+.regua { background: #000; }
+.regua--v { --x: 720; --y: 276; --w: 2; --h: 748; width: max(1.5px, calc(2 * var(--u))); }
+
+/* ---- Manchete ---- */
+.projetos__titulo {
+    --x: 0; --y: 0; --w: 1440; --h: 258;
+    pointer-events: none;
+    font-weight: 400;
+}
+
+.projetos__pre {
+    --x: 50; --y: 10; --w: 420; --fs: 64;
+    height: auto;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    line-height: 1.1;
+    white-space: nowrap;
+    rotate: -4deg;
+}
+
+.projetos__grande {
+    --x: 56; --y: 90; --w: 1180; --fs: 126;
+    height: auto;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    line-height: 1.05;
+    white-space: nowrap;
+    text-shadow: calc(6 * var(--u)) calc(6 * var(--u)) 0 var(--coral);
+}
+
+.projetos__interr {
+    display: inline-block;
+    margin-left: 0.04em;
+    font-family: 'Caveat', cursive;
+    font-size: 1.35em;
+    line-height: 0.7;
+    rotate: 8deg;
+    text-shadow: calc(6 * var(--u)) calc(6 * var(--u)) 0 #ffd60a;
+}
+
+.fita--proj { --x: 26; --y: 112; --w: 150; --h: 36; background: rgba(255, 214, 10, 0.88); rotate: -10deg; z-index: 2; }
+
+.est { rotate: var(--r); overflow: visible; }
+
+/* ---- Rubricas das colunas (faixa de marca-texto com contorno, como "O que ela sabe fazer?") ---- */
+.categoria {
+    --x: 0; --y: 0; --w: 1440; --h: 1024;
+    pointer-events: none;
+    font-weight: 400;
+}
+
+.categoria__texto {
+    --fs: 96;
+    height: auto;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    line-height: 0.9;
+    white-space: nowrap;
+}
+
+.categoria__faixa { border: 3px solid #000; transform-origin: left center; }
+
+.categoria--web .categoria__texto    { --x: 52;  --y: 282; --w: 420; }
+.categoria--web .categoria__faixa    { --x: 36;  --y: 338; --w: 652; --h: 30; background: rgba(250, 110, 110, 0.85); rotate: -0.8deg; }
+.categoria--design .categoria__texto { --x: 700; --y: 866; --w: 700; text-align: right; }
+.categoria--design .categoria__faixa { --x: 741; --y: 920; --w: 674; --h: 30; background: rgba(0, 132, 135, 0.62); rotate: 0.8deg; }
+
+/* ---- Quadros de projeto: molduras de foto (placeholders) ---- */
+.projeto {
+    --c: #ffd60a;
+    --sh: var(--teal);
+    --linha: rgba(0, 0, 0, 0.3);
+    --giro: 0deg;
+    --tape: rgba(255, 214, 10, 0.9);
+    --tape-r: -4deg;
+    border: 3px solid #000;
+    background:
+        linear-gradient(to top right, transparent calc(50% - 1.5px), var(--linha) calc(50% - 1.5px) calc(50% + 1.5px), transparent calc(50% + 1.5px)),
+        linear-gradient(to bottom right, transparent calc(50% - 1.5px), var(--linha) calc(50% - 1.5px) calc(50% + 1.5px), transparent calc(50% + 1.5px)),
+        var(--c);
+    box-shadow: calc(10 * var(--u)) calc(10 * var(--u)) 0 var(--sh);
+    rotate: var(--giro);
+}
+
+/* fita adesiva no topo */
+.projeto::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: calc(-17 * var(--u));
+    width: calc(104 * var(--u));
+    height: calc(30 * var(--u));
+    translate: -50% 0;
+    rotate: var(--tape-r);
+    background: var(--tape);
+    clip-path: polygon(0 0, 4% 12%, 0 25%, 4% 38%, 0 50%, 4% 62%, 0 75%, 4% 88%, 0 100%,
+        100% 100%, 96% 88%, 100% 75%, 96% 62%, 100% 50%, 96% 38%, 100% 25%, 96% 12%, 100% 0);
+}
+
+/* selo com o número do projeto */
+.projeto::after {
+    content: attr(data-n);
+    position: absolute;
+    left: calc(-20 * var(--u));
+    bottom: calc(-20 * var(--u));
+    display: grid;
+    place-items: center;
+    width: calc(56 * var(--u));
+    height: calc(56 * var(--u));
+    border: 3px solid #000;
+    border-radius: 50%;
+    background: #fff;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: calc(32 * var(--u));
+    line-height: 1;
+    rotate: -10deg;
+}
+
+.projeto--w1 { --x: 43;  --y: 419; --w: 379; --h: 128; --c: #ffd60a;  --sh: var(--teal);  --giro: -1.2deg; --tape: rgba(0, 132, 135, 0.78);   --tape-r: -5deg; }
+.projeto--w2 { --x: 253; --y: 595; --w: 419; --h: 151; --c: var(--teal); --sh: #ffd60a;   --giro: 1.2deg;  --tape: rgba(250, 110, 110, 0.88); --tape-r: 4deg;  --linha: rgba(255, 255, 255, 0.4); }
+.projeto--w3 { --x: 43;  --y: 794; --w: 379; --h: 151; --c: var(--laranja); --sh: var(--teal); --giro: -0.8deg; --tape: rgba(255, 214, 10, 0.9); --tape-r: 6deg; }
+.projeto--g1 { --x: 964; --y: 307; --w: 419; --h: 151; --c: var(--teal); --sh: var(--coral); --giro: 1deg;    --tape: rgba(255, 214, 10, 0.9);  --tape-r: -6deg; --linha: rgba(255, 255, 255, 0.4); }
+.projeto--g2 { --x: 744; --y: 501; --w: 419; --h: 151; --c: var(--coral); --sh: #ffd60a;   --giro: -1.2deg; --tape: rgba(0, 132, 135, 0.78);   --tape-r: 5deg; }
+.projeto--g3 { --x: 964; --y: 708; --w: 419; --h: 151; --c: #ffd60a;  --sh: var(--teal);  --giro: 0.8deg;  --tape: rgba(250, 110, 110, 0.88); --tape-r: -4deg; }
+
+/* =========================================================
+   PÁGINA 4 · CONTATOS — "carta à redação"
+   ========================================================= */
+.pagina--contatos .meia-tinta {
+    --mt-a: rgba(255, 147, 38, 0.6);
+    --mt-a-pos: 100% 0%;
+    --mt-a-raio: 34%;
+    --mt-b: rgba(0, 132, 135, 0.5);
+    --mt-b-pos: 0% 100%;
+    --mt-b-raio: 30%;
+}
+
+.contato-chamada {
+    --x: 50; --y: 84; --w: 600; --fs: 84;
+    height: auto;
+    z-index: 3;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    line-height: calc(60 / 84);
+    white-space: nowrap;
+    rotate: -2deg;
+}
+
+/* faixa laranja com contorno (mesma da página 2) */
+.contato-chamada::before {
+    content: '';
+    position: absolute;
+    inset: 30% -3% -8% -3%;
+    background: rgba(255, 147, 38, 0.92);
+    border: 3px solid #000;
+    rotate: 1.5deg;
+    z-index: -1;
+}
+
+.contato-chamada span { position: relative; }
+
+.contato-titulo {
+    --x: 700; --y: 22; --w: 700; --h: 230;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    pointer-events: none;
+    font-weight: 400;
+}
+
+.contato__pre {
+    display: block;
+    margin-right: calc(40 * var(--u));
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: calc(70 * var(--u));
+    line-height: 1.1;
+    white-space: nowrap;
+    rotate: 3deg;
+}
+
+.contato__grande {
+    display: block;
+    margin-top: calc(-14 * var(--u));
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: calc(128 * var(--u));
+    line-height: 1.05;
+    white-space: nowrap;
+    text-shadow: calc(6 * var(--u)) calc(6 * var(--u)) 0 var(--teal);
+}
+
+.fita--contato { --x: 6; --y: 96; --w: 120; --h: 30; background: rgba(255, 214, 10, 0.88); rotate: -32deg; z-index: 4; }
+
+/* ---- Papel de carta (moldura do formulário) ---- */
+.jornal {
+    --x: 36; --y: 292; --w: 645; --h: 690;
+    background: #fff;
+    border: 3px solid #000;
+    box-shadow: calc(11 * var(--u)) calc(11 * var(--u)) 0 var(--teal);
+    rotate: -1deg;
+}
+
+/* linha tracejada de "recorte" (cupom de revista) */
+.jornal::before {
+    content: '';
+    position: absolute;
+    inset: calc(12 * var(--u));
+    border: 2px dashed #000;
+    pointer-events: none;
+}
+
+.jornal__fita {
+    --x: 245; --y: -20; --w: 160; --h: 36;
+    background: rgba(255, 214, 10, 0.88);
+    rotate: 3deg;
+    clip-path: polygon(0 0, 4% 12%, 0 25%, 4% 38%, 0 50%, 4% 62%, 0 75%, 4% 88%, 0 100%,
+        100% 100%, 96% 88%, 100% 75%, 96% 62%, 100% 50%, 96% 38%, 100% 25%, 96% 12%, 100% 0);
+}
+
+.jornal__tesoura {
+    --x: 44; --y: 0; --w: 52; --h: 32;
+    translate: 0 -50%;
+    padding: 0 calc(5 * var(--u));
+    background: #fff;
+    overflow: visible;
+}
+
+/* salutação */
+.jornal__campo--1 {
+    --x: 46; --y: 40; --w: 400; --fs: 52;
+    height: auto;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+/* selo postal */
+.jornal__campo--2 {
+    --x: 470; --y: 34; --w: 128; --h: 150;
+    display: grid;
+    place-items: center;
+    padding: calc(12 * var(--u));
+    background: var(--teal);
+    border: 3px dashed #000;
+    outline: 3px solid #fff;
+    outline-offset: -9px;
+    rotate: 5deg;
+    box-shadow: calc(5 * var(--u)) calc(5 * var(--u)) 0 #ffd60a;
+}
+
+.jornal__campo--2 svg { width: 70%; height: auto; overflow: visible; }
+
+/* folha pautada (caderno) para a mensagem */
+.jornal__campo--3 {
+    --x: 46; --y: 160; --w: 553; --h: 480; --fs: 46;
+    --pauta: calc(48 * var(--u));
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding-right: calc(10 * var(--u));
+    background:
+        linear-gradient(var(--coral), var(--coral)) calc(34 * var(--u)) 0 / 3px 100% no-repeat,
+        repeating-linear-gradient(to bottom, transparent 0 calc(var(--pauta) - 2px), rgba(0, 132, 135, 0.55) calc(var(--pauta) - 2px) var(--pauta));
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    line-height: var(--pauta);
+}
+
+/* ---- Post-it ---- */
+.post-it {
+    --x: 1010; --y: 306; --w: 330; --h: 290;
+    padding: calc(34 * var(--u)) calc(30 * var(--u)) 0;
+    background: #ffd60a;
+    border: 3px solid #000;
+    box-shadow: calc(10 * var(--u)) calc(10 * var(--u)) 0 var(--coral);
+    rotate: 4deg;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: calc(44 * var(--u));
+    line-height: 1.05;
+}
+
+.post-it::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: calc(-19 * var(--u));
+    width: calc(120 * var(--u));
+    height: calc(34 * var(--u));
+    translate: -50% 0;
+    rotate: -4deg;
+    background: rgba(0, 132, 135, 0.78);
+    clip-path: polygon(0 0, 4% 12%, 0 25%, 4% 38%, 0 50%, 4% 62%, 0 75%, 4% 88%, 0 100%,
+        100% 100%, 96% 88%, 100% 75%, 96% 62%, 100% 50%, 96% 38%, 100% 25%, 96% 12%, 100% 0);
+}
+
+.post-it__grande {
+    margin-top: 0.1em;
+    font-size: 1.6em;
+    line-height: 0.95;
+    white-space: nowrap;
+    rotate: -3deg;
+    text-shadow: calc(3 * var(--u)) calc(3 * var(--u)) 0 #fff;
+}
+
+.seta { --x: 740; --y: 430; --w: 260; --h: 110; overflow: visible; }
+
+/* ---- Redes (cartão-ranking como o de habilidades) ---- */
+.redes-titulo {
+    --x: 800; --y: 622; --w: 540; --fs: 72;
+    height: auto;
+    z-index: 3;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    line-height: calc(56 / 76);
+    text-align: right;
+}
+
+.redes-titulo::before {
+    content: '';
+    position: absolute;
+    inset: 30% 0 -6% 3%;
+    background: rgba(255, 147, 38, 0.92);
+    border: 3px solid #000;
+    rotate: -2deg;
+    z-index: -1;
+}
+
+.redes-titulo span { position: relative; }
+
+.redes {
+    --x: 800; --y: 704; --w: 540;
+    height: auto;
+    list-style: none;
+    padding: calc(6 * var(--u)) 0;
+    background: #fff;
+    border: 3px solid #000;
+    box-shadow: calc(11 * var(--u)) calc(11 * var(--u)) 0 var(--teal);
+    rotate: 1deg;
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-weight: 600;
+    font-size: max(14px, calc(25 * var(--u)));
+}
+
+.redes li {
+    position: relative;
+    height: calc(46 * var(--u));
+    border-bottom: 2px dashed #000;
+}
+
+.redes li:last-child { border-bottom: 0; }
+
+.redes li:nth-child(even)::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(250, 110, 110, 0.38);
+    z-index: -1;
+}
+
+.redes a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 calc(24 * var(--u));
+    color: #000;
+    text-decoration: none;
+}
+
+.redes a::after {
+    content: '→';
+    font-family: 'Caveat', cursive;
+    font-size: 1.5em;
+    line-height: 1;
+    transition: translate 250ms var(--anim-ease);
+}
+
+.redes a:hover::after,
+.redes a:focus-visible::after {
+    translate: calc(8 * var(--u)) 0;
+}
+
+.redes a:hover,
+.redes a:focus-visible { background: rgba(255, 214, 10, 0.55); }
+
+/* =========================================================
+   ANIMAÇÕES · estado inicial (só com html.js) e estado final (.visivel)
+   O JS apenas marca .visivel e define --atraso; tudo é ajustável pelas
+   variáveis --anim-* acima.
+   ========================================================= */
+html.js:not(.sem-anim) [data-anim] {
+    transition:
+        opacity var(--anim-dur) var(--anim-ease) var(--atraso, 0ms),
+        translate var(--anim-dur) var(--anim-ease) var(--atraso, 0ms),
+        scale var(--anim-dur) var(--anim-ease) var(--atraso, 0ms),
+        clip-path calc(var(--anim-dur) * 1.2) var(--anim-ease) var(--atraso, 0ms);
+}
+
+html.js:not(.sem-anim) [data-anim]:not(.visivel) { opacity: 0; }
+
+html.js:not(.sem-anim) [data-anim="subir"]:not(.visivel)    { translate: 0 var(--anim-dist); }
+html.js:not(.sem-anim) [data-anim="fade"]:not(.visivel)     { translate: 0 calc(var(--anim-dist) * -0.4); }
+html.js:not(.sem-anim) [data-anim="foto"]:not(.visivel)     { scale: 0.86; }
+html.js:not(.sem-anim) [data-anim="pop"]:not(.visivel)      { scale: 0.7; }
+html.js:not(.sem-anim) [data-anim="papel"]:not(.visivel)    { translate: calc(var(--anim-dist) * 3) calc(var(--anim-dist) * -1); scale: 0.9; }
+html.js:not(.sem-anim) [data-anim="clara"]:not(.visivel)    { translate: 0 calc(var(--anim-dist) * -1); scale: 0.92; }
+html.js:not(.sem-anim) [data-anim="corpo"]:not(.visivel)    { translate: 0 calc(var(--anim-dist) * 2); }
+html.js:not(.sem-anim) [data-anim="projeto"]:not(.visivel)  { translate: 0 calc(var(--anim-dist) * 1.4); scale: 0.97; }
+html.js:not(.sem-anim) [data-anim="estrela"]:not(.visivel)  { scale: 0; }
+
+/* Linhas do título: cada linha sobe de dentro de uma "máscara" */
+.linha { display: block; overflow: hidden; padding-bottom: 0.12em; margin-bottom: -0.12em; }
+.linha > span { display: block; }
+
+html.js:not(.sem-anim) [data-anim="linhas"] .linha > span {
+    transition: translate calc(var(--anim-dur) * 1.1) var(--anim-ease) var(--atraso-linha, 0ms);
+}
+
+html.js:not(.sem-anim) [data-anim="linhas"]:not(.visivel) .linha > span { translate: 0 110%; }
+html.js:not(.sem-anim) [data-anim="linhas"]:not(.visivel) { opacity: 1; }
+
+/* Marca-texto, riscos e faixas: desenham da esquerda para a direita.
+   Usa scale (e não clip-path) para o IntersectionObserver continuar enxergando o elemento. */
+html.js:not(.sem-anim) [data-anim="risco"]:not(.visivel) { opacity: 1; scale: 0 1; }
+
+/* Marca-texto inline: pinta da esquerda para a direita depois que o parágrafo entra */
+html.js:not(.sem-anim) .destaque {
+    transition: background-size calc(var(--anim-dur) * 1.2) var(--anim-ease) calc(var(--atraso, 0ms) + 500ms);
+}
+html.js:not(.sem-anim) [data-anim]:not(.visivel) .destaque { background-size: 0 100%; }
+
+/* Linha de habilidade: nome sobe, faixa rosa desenha, estrelas preenchem até a nota */
+html.js:not(.sem-anim) [data-anim="hab"]:not(.visivel) { opacity: 1; }
+html.js:not(.sem-anim) [data-anim="hab"] .hab__nome,
+html.js:not(.sem-anim) [data-anim="hab"].hab--faixa::before,
+html.js:not(.sem-anim) [data-anim="hab"] .estrelas .cheia {
+    transition:
+        opacity var(--anim-dur) var(--anim-ease) var(--atraso, 0ms),
+        translate var(--anim-dur) var(--anim-ease) var(--atraso, 0ms),
+        clip-path calc(var(--anim-dur) * 1.4) var(--anim-ease) calc(var(--atraso, 0ms) + 200ms);
+}
+html.js:not(.sem-anim) [data-anim="hab"]:not(.visivel) .hab__nome { opacity: 0; translate: 0 calc(var(--anim-dist) * 0.5); }
+html.js:not(.sem-anim) [data-anim="hab"].hab--faixa:not(.visivel)::before { clip-path: inset(0 100% 0 0); }
+html.js:not(.sem-anim) [data-anim="hab"]:not(.visivel) .estrelas .cheia { clip-path: inset(0 100% 0 0); }
+
+/* Destaque do título de habilidades: faixa laranja desenha junto */
+html.js:not(.sem-anim) .sabe-fazer__titulo::before {
+    transition: clip-path calc(var(--anim-dur) * 1.4) var(--anim-ease) 150ms;
+}
+html.js:not(.sem-anim) .sabe-fazer__titulo:not(.visivel)::before { clip-path: inset(0 100% 0 0); }
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation: none !important;
+    }
+}
+
+/* =========================================================
+   MOBILE / TABLET ESTREITO (≤ 900px)
+   O Figma só tem frames desktop; esta é uma adaptação em coluna
+   que mantém a hierarquia, as cores e a tipografia do protótipo.
+   Aqui 1 unidade de design (--u) vira um valor fixo em px, para
+   contornos, sombras e fitas continuarem visíveis em tela pequena.
+   ========================================================= */
+@media (max-width: 900px) {
+    .pagina {
+        --u: 0.7px;
+        aspect-ratio: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 28px;
+        padding: 56px 24px;
+        --m: min(100%, 520px);
+    }
+
+    /* tudo que era posicionado volta ao fluxo */
+    .p {
+        position: relative;
+        left: auto;
+        top: auto;
+        width: auto;
+        height: auto;
+        font-size: inherit;
+        rotate: none;
+    }
+
+    .pagina > *,
+    .pagina > .p {
+        max-width: var(--m);
+    }
+
+    .fita, .meia-tinta, .estrelas-soltas, .regua { display: none; }
+
+    .filete { width: 100%; height: 8px; }
+
+    .folio { align-self: flex-end; font-size: 1.5rem; margin-top: 4px; }
+
+    /* ---- Capa ---- */
+    #inicial { align-items: center; padding-bottom: 0; gap: 22px; }
+
+    .cabecalho { order: 0; width: 100%; flex-wrap: wrap; justify-content: center; gap: 6px 14px; font-size: 0.66rem; letter-spacing: 0.14em; text-align: center; white-space: normal; }
+    .pagina--capa .filete { order: 0; }
+
+    .titulo { order: 1; width: 100%; pointer-events: auto; }
+    .titulo h1 { font-size: clamp(2.3rem, 10.8vw, 3.5rem); line-height: 1.2; }
+    .titulo .linha { white-space: normal; }
+
+    .foto { order: 2; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 16px; pointer-events: auto; }
+    #foto-principal { width: min(80vw, 400px); height: min(80vw, 400px); }
+    .foto__anel, .selo, .foto > .fita { display: none; }
+    .btn1, .btn2 { width: min(86vw, 330px); min-width: 0; height: 62px; font-size: 1.4rem; padding: 0 0.6em; white-space: normal; }
+    .btn1 { order: 3; }
+    .btn2 { order: 2; }
+
+    .texto { order: 3; width: 100%; font-size: 1.2rem; line-height: 1.3; padding-left: 16px; }
+
+    .barra-lateral,
+    .pagina > .barra-lateral {
+        order: 4;
+        width: calc(100% + 48px);
+        max-width: none;
+        margin: 10px -24px 0;
+        padding: 26px 24px 34px;
+        display: grid;
+        grid-template-columns: minmax(0, 150px) 1fr;
+        align-items: center;
+        gap: 16px 18px;
+        border-left: 0;
+        border-top: 4px solid #000;
+    }
+
+    .barra-lateral::before { left: 0; right: 0; top: 6px; bottom: auto; width: auto; height: 1.5px; }
+
+    .nesta-edicao { grid-column: 1 / -1; font-size: 2.4rem; white-space: normal; }
+    .papel { width: 100%; max-width: 150px; height: auto; aspect-ratio: 268 / 160; justify-self: center; }
+    .papel--azul { rotate: 8deg; }
+    .papel--laranja { rotate: -8deg; }
+    .papel--coral { rotate: 4deg; }
+    .legenda { font-size: 1.2rem; }
+    .aba { display: none; }
+
+    /* ---- Quem é a Clara ---- */
+    .quem-e { width: 100%; display: flex; align-items: center; flex-wrap: wrap; gap: 4px 10px; }
+    .quem-e__pre { font-size: 2.6rem; flex: 1 0 100%; }
+    .quem-e__clara { width: min(72vw, 340px); height: auto; rotate: 2.5deg; flex: 0 0 auto; }
+    .quem-e__interr { font-size: 5rem; rotate: 8deg; width: auto; }
+
+    .sobre { width: 100%; display: flex; flex-direction: column; gap: 22px; pointer-events: auto; }
+    .sobre p { font-size: 1.05rem; line-height: 1.55; text-align: left; }
+    .sobre__p2 { font-size: 1.35rem; }
+
+    .figura { width: min(84vw, 400px); aspect-ratio: 556 / 968; align-self: center; margin-top: 8px; }
+    .figura__disco, .figura__anel, .figura__img { position: absolute; height: auto; aspect-ratio: 1; }
+    .figura__disco { left: 6%; top: 42%; width: 72%; }
+    .figura__anel { left: 0%; top: 38%; width: 84%; }
+    .figura__img { left: 0; top: 0; width: 100%; height: 100%; aspect-ratio: auto; }
+
+    .sabe-fazer { width: 100%; pointer-events: auto; }
+    .sabe-fazer__titulo { position: relative; text-align: left; font-size: 3.2rem; line-height: 0.95; width: auto; }
+    .sabe-fazer__titulo::before { inset: 28% auto -4% -6px; width: min(86vw, 340px); }
+    .habilidades { margin-top: 28px; rotate: 0deg; box-shadow: 8px 8px 0 var(--teal); }
+    .hab { height: 56px; padding: 0 14px; font-size: 1.05rem; }
+    .hab__nome { flex: 1 1 auto; }
+    .estrelas { width: min(44vw, 190px); }
+
+    /* ---- Projetos ---- */
+    .projetos__titulo { width: 100%; }
+    .projetos__pre { display: block; font-size: 2.6rem; }
+    .projetos__grande { display: block; font-size: clamp(2.8rem, 14vw, 4.6rem); line-height: 1.05; white-space: normal; margin-top: -4px; }
+
+    .categoria { width: 100%; pointer-events: auto; }
+    .categoria__texto,
+    .categoria--design .categoria__texto { font-size: 3.2rem; position: relative; display: inline-block; z-index: 1; text-align: left; white-space: normal; }
+    .categoria .categoria__faixa { position: absolute; left: 0; top: auto; bottom: 2px; width: 100%; height: 16px; rotate: none; z-index: 0; }
+    .projeto { width: 100%; height: 38vw; max-height: 180px; margin-bottom: 8px; }
+
+    /* ---- Contatos ---- */
+    .contato-titulo { order: -2; width: 100%; align-items: flex-start; }
+    .contato__pre { margin: 0; font-size: 2.4rem; rotate: none; }
+    .contato__grande { margin-top: -4px; font-size: clamp(3rem, 15vw, 4.8rem); }
+    .contato-chamada { order: -1; font-size: 2.6rem; line-height: 1.1; white-space: normal; }
+
+    .jornal { width: 100%; padding: 26px 18px 26px; display: flex; flex-direction: column; gap: 12px; }
+    .jornal__fita { position: absolute; left: 50%; top: -14px; width: 130px; height: 30px; translate: -50% 0; }
+    .jornal__tesoura { position: absolute; left: 28px; top: 0; width: 46px; height: 28px; }
+    .jornal__campo--1 { font-size: 2.1rem; padding-right: 96px; white-space: normal; }
+    .jornal__campo--2 { position: absolute; right: 24px; top: 22px; width: 74px; height: 88px; rotate: 5deg; }
+    .jornal__campo--3 { width: 100%; height: calc(9 * var(--pauta)); font-size: 1.7rem; }
+
+    .post-it { width: min(100%, 340px); padding: 30px 26px 26px; font-size: 1.9rem; }
+    .seta { display: none; }
+
+    .redes-titulo { font-size: 2.8rem; text-align: left; line-height: 0.95; }
+    .redes-titulo::before { inset: 28% auto -4% -6px; width: min(86vw, 340px); }
+    .redes { width: 100%; rotate: none; box-shadow: 8px 8px 0 var(--teal); font-size: 1.1rem; }
+    .redes li { height: 52px; }
+}
